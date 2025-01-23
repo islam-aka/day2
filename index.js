@@ -4,46 +4,36 @@ const button = document.createElement('button');
 button.textContent = 'Запросить ориентацию устройства';
 button.addEventListener('click', requestDeviceOrientation);
 document.body.appendChild(button);
-// async function requestDeviceOrientation() {
-//   if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-//     //iOS 13+ devices
-//     try {
-//       const permissionState = await DeviceOrientationEvent.requestPermission()
-//       document.body.innerHTML += `<h3>permissionState: ${permissionState}</h3>`
 
-//       if (permissionState === 'granted') {
-//         window.addEventListener('deviceorientation', handleOrientation)
-//       } else {
-//         document.body.innerHTML += `<h2>Alpha: ${event.alpha}, Beta: ${event.beta}, Gamma: ${event.gamma}</h2>`
-//       }
-//     } catch (error) {
-//       document.body.innerHTML += `<h3>Доступ к данным датчиков отклонён пользователем. ${error}</h3>`
-//     }
-//   } else if ('DeviceOrientationEvent' in window) {
-//     //non iOS 13+ devices
-//     console.log("not iOS");
-//     window.addEventListener('deviceorientation', handleOrientation)
-//   } else {
-//     //not supported
-//     document.body.innerHTML +=  `<h2>Запрос разрешения не требуется.</h2>`
-//   }
-// }
+function handleOrientation(event) {
+  let alpha = event.alpha
+  let beta = event.beta
+  let gamma = event.gamma
+
+  let cube = document.querySelector('.cube');
+  cube.style.transform = 'rotateX(' + beta + 'deg) rotateY(' + gamma + 'deg) rotateZ(' + alpha + 'deg)';
+
+}
 
 async function requestDeviceOrientation() {
-  // ... ваш существующий код
-
-  try {
-    const permissionState = await DeviceOrientationEvent.requestPermission()
-    document.body.innerHTML += `<h3>permissionState: ${permissionState}</h3>`// Выводим значение permissionState в консоль
-
-    if (permissionState === 'granted') {
-      // ...
-    } else {
-      console.error('Permission denied:', error); // Выводим более подробную информацию об ошибке
-      document.body.innerHTML += `<h3>Доступ к данным датчиков отклонён пользователем. ${error.message}</h3>`;
+  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    //iOS 13+ devices
+    try {
+      const permissionState = await DeviceOrientationEvent.requestPermission()
+      if (permissionState === 'granted') {
+        window.addEventListener('deviceorientation', handleOrientation)
+      } else {
+        alert('Permission was denied')
+      }
+    } catch (error) {
+      alert(error)
     }
-  } catch (error) {
-    console.error("Ошибка запроса разрешения:", error); // Вывод в консоль
-    document.body.innerHTML += `<h3>Доступ к данным датчиков отклонён пользователем. ${error}</h3>`;
-}
+  } else if ('DeviceOrientationEvent' in window) {
+    //non iOS 13+ devices
+    console.log("not iOS");
+    window.addEventListener('deviceorientation', handleOrientation)
+  } else {
+    //not supported
+    alert('nicht unterstützt')
+  }
 }
