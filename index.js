@@ -13,6 +13,9 @@ function handleOrientation(event) {
   let cube = document.querySelector('.cube');
   cube.style.transform = 'rotateX(' + beta + 'deg) rotateY(' + gamma + 'deg) rotateZ(' + alpha + 'deg)';
 
+	const h2 = document.createElement('h2');
+	h2.innerText = 'rotateX(' + beta + 'deg) rotateY(' + gamma + 'deg) rotateZ(' + alpha + 'deg)'
+	document.body.appendChild(h2);
 }
 
 async function requestDeviceOrientation() {
