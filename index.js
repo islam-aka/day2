@@ -1,5 +1,6 @@
 // document.body.innerHTML += `<h2>${typeof DeviceOrientationEvent !== 'undefined'} ${DeviceOrientationEvent}, </h2>`
 // document.body.innerHTML += `<h2>${DeviceOrientationEvent.requestPermission}, ${typeof DeviceOrientationEvent.requestPermission}=${typeof DeviceOrientationEvent.requestPermission === 'function'}</h2>`
+const block = document.getElementById('test')
 const button = document.createElement('button');
 button.textContent = 'Запросить ориентацию устройства';
 button.addEventListener('click', requestDeviceOrientation);
@@ -13,9 +14,7 @@ function handleOrientation(event) {
   let cube = document.querySelector('.cube');
   cube.style.transform = 'rotateX(' + beta + 'deg) rotateY(' + gamma + 'deg) rotateZ(' + alpha + 'deg)';
 
-	const h2 = document.createElement('h2');
-	h2.innerText = 'rotateX(' + beta + 'deg) rotateY(' + gamma + 'deg) rotateZ(' + alpha + 'deg)'
-	document.body.appendChild(h2);
+	block.innerHTML = `<h2>rotateX(' + ${beta} + 'deg) rotateY(' + ${gamma} + 'deg) rotateZ(' + ${alpha} + 'deg)</h2>`
 }
 
 async function requestDeviceOrientation() {
